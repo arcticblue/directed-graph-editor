@@ -16,7 +16,4 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    index: 'index.html',
-  },
 };
