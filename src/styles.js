@@ -22,7 +22,7 @@ const styles = Cytoscape.stylesheet()
   .selector('edge')
   .style({
     content: 'data(name)',
-    width: '4',
+    width: '1',
     'line-color': '#000000',
     //'curve-style': 'bezier',
     //'curve-style': 'segments',
@@ -44,6 +44,26 @@ const styles = Cytoscape.stylesheet()
     'border-color': '#2C67D2',
     'line-color': '#2C67D2',
     'target-arrow-color': '#2C67D2',
+  })
+
+  .selector('#ghostEdge')
+  .style({
+    content: 'data(name)',
+    width: '1',
+    'line-color': '#000000',
+    //'curve-style': 'bezier',
+    //'curve-style': 'segments',
+    'text-wrap': 'wrap',
+    'text-rotation': 'autorotate',
+    'text-background-color': '#ffffff',
+    'text-background-opacity': 1,
+    'text-background-padding': '3px',
+    'target-arrow-shape': 'triangle',
+    'target-arrow-color': '#000000',
+    'target-endpoint': 'outside-to-line-or-label',
+    'source-endpoint': 'inside-to-node',
+    //'source-distance-from-node': '-10px',
+    //'target-distance-from-node': '1px'
   });
 
 export default styles;

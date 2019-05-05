@@ -1,12 +1,14 @@
+import {debounce} from 'debounce';
+
 const deleteSelected = cytoscape => {
   document.addEventListener(
     'keydown',
-    event => {
+    debounce(event => {
       if (event.key === 'Backspace') {
         cytoscape.remove(':selected');
       }
-    },
-    true,
+    }, true),
+    200,
   );
 };
 

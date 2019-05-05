@@ -1,6 +1,10 @@
 const createNode = cytoscape => {
   cytoscape.on('tap', event => {
-    if (event.target === cytoscape && !cytoscape.$(':selected').length) {
+    if (
+      !event.isPropagationStopped() &&
+      cytoscape === event.target &&
+      !cytoscape.$(':selected').length
+    ) {
       const position = event.renderedPosition;
       cytoscape.add([
         {

@@ -16,7 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "cytoscape": "^3.5.5",
-    "cytoscape-grid-guide": "^2.2.1"
+    "cytoscape-grid-guide": "^2.2.1",
+    "debounce": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
