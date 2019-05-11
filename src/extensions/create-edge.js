@@ -1,3 +1,4 @@
+/*
 import {debounce} from 'debounce';
 
 const createEdge = cytoscape => {
@@ -10,7 +11,7 @@ const createEdge = cytoscape => {
     console.log('start edge');
     cytoscape.autounselectify(true);
     cytoscape.autoungrabify(true);
-    /*
+ 
     ghostNode = cytoscape.add({
       group: 'nodes',
       data: {
@@ -28,7 +29,7 @@ const createEdge = cytoscape => {
         target: ghostNode.id()
       }
     });
-    */
+  
   };
 
   const updateSegment = debounce(event => {
@@ -44,7 +45,7 @@ const createEdge = cytoscape => {
     console.log('create edge');
     cytoscape.autounselectify(false);
     cytoscape.autoungrabify(false);
-    /*
+   
     cytoscape.add({
       group: 'edges',
       data: {
@@ -56,7 +57,7 @@ const createEdge = cytoscape => {
     });
     cytoscape.remove(ghostEdge)
     cytoscape.remove(ghostNode)
-    */
+    
     sourceElement = ghostEdge = ghostNode = null;
   };
 
@@ -101,7 +102,7 @@ const createEdge = cytoscape => {
       event.stopPropagation();
       cytoscape.autounselectify(true);
       cytoscape.autoungrabify(true);
-    }
+    } 
   });
 
   cytoscape.on('mouseup', event => {
@@ -123,3 +124,4 @@ const createEdge = cytoscape => {
 };
 
 export default createEdge;
+*/

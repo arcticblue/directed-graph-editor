@@ -1,14 +1,7 @@
-import {debounce} from 'debounce';
-
 const resizeNode = cytoscape => {
-  cytoscape.on(
-    'select',
-    'node',
-    debounce(event => {
-      console.log('show handles');
-    }),
-    200,
-  );
+  cytoscape.on('select', 'node', event => {
+    console.log('show handles');
+  });
 };
 
 export default resizeNode;

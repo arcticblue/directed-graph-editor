@@ -1,4 +1,4 @@
-import createEdge from './create-edge';
+//import createEdge from './create-edge';
 import createNode from './create-node';
 import deleteSelected from './delete-selected';
 import resizeNode from './resize-node';
@@ -8,7 +8,7 @@ const register = cytoscape => {
     return;
   }
   cytoscape('core', 'enableExtensions', function() {
-    createEdge(this);
+    //createEdge(this);
     createNode(this);
     deleteSelected(this);
     resizeNode(this);

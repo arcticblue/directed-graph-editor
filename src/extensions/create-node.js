@@ -1,5 +1,7 @@
+const create = 0;
+
 const createNode = cytoscape => {
-  cytoscape.on('tap', event => {
+  const _createNode = event => {
     if (
       !event.isPropagationStopped() &&
       cytoscape === event.target &&
@@ -18,7 +20,9 @@ const createNode = cytoscape => {
         },
       ]);
     }
-  });
+  };
+
+  cytoscape.on('tap', _createNode);
 };
 
 export default createNode;

@@ -13,14 +13,14 @@ export default class DirectedGraphEditor {
     this.cy.enableExtensions();
     this.cy.userPanningEnabled(false);
   }
+
   load = elements => {
-    this.cy.ready(() => {
-      this.cy.batch(() => {
-        this.cy.elements().remove();
-        this.cy.add(elements);
-      });
+    this.cy.batch(() => {
+      this.cy.elements().remove();
+      this.cy.add(elements);
     });
   };
+
   layout = options => {
     return this.cy.layout(options);
   };
