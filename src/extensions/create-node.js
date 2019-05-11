@@ -1,32 +1,28 @@
-const create = 0;
+import uuid from 'uuid/v1'
 
-const createNode = cytoscape => {
-  const shouldCreateNode = event => {
-    return (
-      !event.isPropagationStopped() &&
-      cytoscape === event.target &&
-      !cytoscape.$(':selected').length
-    );
-  };
+const createNode = (cytoscape) => {
+  const shouldCreateNode = (event) => {
+    return !event.isPropagationStopped() && cytoscape === event.target && !cytoscape.$(':selected').length
+  }
 
-  const _createNode = event => {
-    if (shouldCreateNode(event)) {
-      const position = event.renderedPosition;
-      cytoscape.add([
-        {
-          group: 'nodes',
-          data: {
-            // temp just so it should be more unique
-            id: 'testid' + position.x + new Date(),
-            name: '' + cytoscape.nodes().length,
-          },
-          renderedPosition: position,
+  const doCreateNode = (event) => {
+    cytoscape.add([
+      {
+        group: 'nodes',
+        data: {
+          id: uuid(),
+          name: '' + cytoscape.nodes().length
         },
-      ]);
+        renderedPosition: event.renderedPosition
+      }
+    ])
+  }
+
+  cytoscape.on('tap', (event) => {
+    if (shouldCreateNode(event)) {
+      doCreateNode(event)
     }
-  };
+  })
+}
 
-  cytoscape.on('tap', _createNode);
-};
-
-export default createNode;
+export default createNode

@@ -17,7 +17,8 @@
   "dependencies": {
     "cytoscape": "^3.5.5",
     "cytoscape-grid-guide": "^2.2.1",
-    "debounce": "^1.2.0"
+    "debounce": "^1.2.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -33,9 +34,12 @@
   },
   "prettier": {
     "singleQuote": true,
-    "trailingComma": "all",
-    "bracketSpacing": false,
-    "jsxBracketSameLine": true
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "arrowParens": "always",
+    "semi": false,
+    "printWidth": 120
   },
   "husky": {
     "hooks": {

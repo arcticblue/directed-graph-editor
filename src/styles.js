@@ -1,4 +1,4 @@
-import Cytoscape from 'cytoscape';
+import Cytoscape from 'cytoscape'
 
 const styles = Cytoscape.stylesheet()
   .selector('node')
@@ -17,7 +17,7 @@ const styles = Cytoscape.stylesheet()
     'padding-bottom': '10',
     'text-wrap': 'wrap',
     'text-valign': 'center',
-    'text-halign': 'center',
+    'text-halign': 'center'
   })
   .selector('edge')
   .style({
@@ -34,7 +34,7 @@ const styles = Cytoscape.stylesheet()
     'target-arrow-shape': 'triangle',
     'target-arrow-color': '#000000',
     'target-endpoint': 'outside-to-line-or-label',
-    'source-endpoint': 'inside-to-node',
+    'source-endpoint': 'inside-to-node'
     //'source-distance-from-node': '-10px',
     //'target-distance-from-node': '1px'
   })
@@ -43,7 +43,7 @@ const styles = Cytoscape.stylesheet()
     'background-color': '#b18f00',
     'border-color': '#2C67D2',
     'line-color': '#2C67D2',
-    'target-arrow-color': '#2C67D2',
+    'target-arrow-color': '#2C67D2'
   })
 
   .selector('#ghostEdge')
@@ -61,9 +61,9 @@ const styles = Cytoscape.stylesheet()
     'target-arrow-shape': 'triangle',
     'target-arrow-color': '#000000',
     'target-endpoint': 'outside-to-line-or-label',
-    'source-endpoint': 'inside-to-node',
+    'source-endpoint': 'inside-to-node'
     //'source-distance-from-node': '-10px',
     //'target-distance-from-node': '1px'
-  });
+  })
 
-export default styles;
+export default styles

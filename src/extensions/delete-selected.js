@@ -1,14 +1,14 @@
-const deleteSelected = cytoscape => {
+const deleteSelected = (cytoscape) => {
   document.addEventListener(
     'keydown',
-    event => {
-      console.log(document.activeElement);
+    (event) => {
+      console.log(document.activeElement)
       if (event.key === 'Backspace') {
-        cytoscape.remove(':selected');
+        cytoscape.remove(':selected')
       }
     },
-    true,
-  );
-};
+    true
+  )
+}
 
-export default deleteSelected;
+export default deleteSelected

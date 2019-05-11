@@ -1,5 +1,5 @@
-import DirectedGraphEditor from './editor';
+import DirectedGraphEditor from './editor'
 
-window.DirectedGraphEditor = DirectedGraphEditor;
+window.DirectedGraphEditor = DirectedGraphEditor
 
-export {DirectedGraphEditor};
+export { DirectedGraphEditor }
