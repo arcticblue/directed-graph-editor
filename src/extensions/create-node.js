@@ -1,12 +1,16 @@
 const create = 0;
 
 const createNode = cytoscape => {
-  const _createNode = event => {
-    if (
+  const shouldCreateNode = event => {
+    return (
       !event.isPropagationStopped() &&
       cytoscape === event.target &&
       !cytoscape.$(':selected').length
-    ) {
+    );
+  };
+
+  const _createNode = event => {
+    if (shouldCreateNode(event)) {
       const position = event.renderedPosition;
       cytoscape.add([
         {
