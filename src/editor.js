@@ -16,6 +16,7 @@ export default class DirectedGraphEditor {
     this.cy.batch(() => {
       this.cy.elements().remove()
       this.cy.add(elements)
+      this.cy.elements().ungrabify()
     })
   }
 

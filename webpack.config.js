@@ -1,8 +1,9 @@
+const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, 'dist'),
     filename: 'directed-graph-editor.js',
   },
   module: {
@@ -15,6 +16,7 @@ module.exports = {
     ],
   },
   devServer: {
+    contentBase: path.join(__dirname, 'docs'),
     compress: true,
     port: 9000
   }

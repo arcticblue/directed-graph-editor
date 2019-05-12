@@ -3,6 +3,7 @@ import { Stage } from 'konva'
 //import createEdge from './create-edge';
 import createNode from './create-node'
 import deleteSelected from './delete-selected'
+import moveSelected from './move-selected'
 import resizeNode from './resize-node'
 
 const prepareStage = (cytoscape) => {
@@ -40,6 +41,7 @@ const register = (cytoscape) => {
     //createEdge(this);
     createNode(this)
     deleteSelected(this)
+    moveSelected(this)
     resizeNode(this, stage)
   })
 }

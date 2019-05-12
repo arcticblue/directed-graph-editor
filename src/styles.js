@@ -3,7 +3,11 @@ import Cytoscape from 'cytoscape'
 const styles = Cytoscape.stylesheet()
   .selector('core')
   .css({
-    'active-bg-size': 0
+    'active-bg-opacity': 0
+  })
+  .selector(':active')
+  .css({
+    'overlay-opacity': 0
   })
   .selector('node')
   .style({
@@ -21,7 +25,8 @@ const styles = Cytoscape.stylesheet()
     'padding-bottom': '10',
     'text-wrap': 'wrap',
     'text-valign': 'center',
-    'text-halign': 'center'
+    'text-halign': 'center',
+    'active-bg-opacity': 0
   })
   .selector('edge')
   .style({

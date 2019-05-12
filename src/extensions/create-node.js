@@ -16,6 +16,7 @@ const createNode = (cytoscape) => {
         renderedPosition: event.renderedPosition
       }
     ])
+    cytoscape.elements().ungrabify()
   }
 
   cytoscape.on('tap', (event) => {
