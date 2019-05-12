@@ -1,10 +1,8 @@
-const path = require('path');
-const fs = require('fs');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: __dirname,
     filename: 'directed-graph-editor.js',
   },
   module: {
