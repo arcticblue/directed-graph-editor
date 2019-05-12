@@ -6,10 +6,8 @@ cytoscape.use(extensions)
 
 export default class DirectedGraphEditor {
   constructor(id) {
-    this.cy = cytoscape({
-      container: document.getElementById(id),
-      style
-    })
+    const container = document.getElementById(id)
+    this.cy = cytoscape({ container, style })
     this.cy.enableExtensions()
     this.cy.userPanningEnabled(false)
   }

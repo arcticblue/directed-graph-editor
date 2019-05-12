@@ -1,6 +1,10 @@
 import Cytoscape from 'cytoscape'
 
 const styles = Cytoscape.stylesheet()
+  .selector('core')
+  .css({
+    'active-bg-size': 0
+  })
   .selector('node')
   .style({
     content: 'data(name)',
@@ -45,7 +49,6 @@ const styles = Cytoscape.stylesheet()
     'line-color': '#2C67D2',
     'target-arrow-color': '#2C67D2'
   })
-
   .selector('#ghostEdge')
   .style({
     content: 'data(name)',
