@@ -1,10 +1,14 @@
-const deleteSelected = (cytoscape) => {
+const deleteSelected = (editor) => {
+  const stage = editor.stage
+
   document.addEventListener(
     'keydown',
     (event) => {
-      console.log(document.activeElement)
       if (event.key === 'Backspace') {
-        cytoscape.remove(':selected')
+        editor.selected.forEach((element) => {
+          element.destroy()
+        })
+        stage.batchDraw()
       }
     },
     true

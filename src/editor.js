@@ -1,26 +1,54 @@
-import cytoscape from 'cytoscape'
-import style from './styles'
-import extensions from './extensions'
-
-cytoscape.use(extensions)
+import { Layer, Stage, Transformer } from 'konva'
+import { enableExtensions } from './extensions'
+import { Vertex } from './model'
 
 export default class DirectedGraphEditor {
   constructor(id) {
-    const container = document.getElementById(id)
-    this.cy = cytoscape({ container, style })
-    this.cy.enableExtensions()
-    this.cy.userPanningEnabled(false)
+    const container = (this._container = document.getElementById(id))
+    const stage = (this._stage = new Stage({
+      container: id,
+      width: container.offsetWidth,
+      height: container.offsetHeight
+    }))
+    window.addEventListener('resize', () => {
+      stage.size({ width: container.offsetWidth, height: container.offsetHeight })
+    })
+    const graph = (this._graph = new Layer())
+    enableExtensions(this)
+    stage.add(graph)
+    stage.draw()
   }
 
-  load = (elements) => {
-    this.cy.batch(() => {
-      this.cy.elements().remove()
-      this.cy.add(elements)
-      this.cy.elements().ungrabify()
-    })
+  get container() {
+    return this._container
   }
+
+  get stage() {
+    return this._stage
+  }
+
+  get graph() {
+    return this._graph
+  }
+
+  get vertices() {
+    return this._graph
+      .find((node) => {
+        return node.getType() === 'Group'
+      })
+      .toArray()
+      .filter((node) => node instanceof Vertex)
+  }
+
+  get selected() {
+    return this.vertices.filter((vertex) => vertex.isSelected)
+  }
+
+  load = (elements) => {}
 
   layout = (options) => {
-    return this.cy.layout(options)
+    return {
+      run: () => {}
+    }
   }
 }
