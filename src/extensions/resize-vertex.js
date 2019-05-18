@@ -1,49 +1,69 @@
 const resizeVertex = (editor) => {
-  const stage = editor.stage
   const graph = editor.graph
 
-  const resizeVertex = (event) => {
-    const node = event.currentTarget
-    const vertex = event.currentTarget.parent
-    node.on('transform', (event) => {
-      /*
-      let { x, y } = node.position()
-      vertex.move({
-        x: Math.min(x, 0),
-        y: Math.min(y, 0)
-      })
-*/
-      const { x: nodeX, y: nodeY } = node.absolutePosition()
-      const { clientX, clientY } = event.evt
-      console.log({
-        clientX,
-        nodeX,
-        width: node.width() * node.scaleX(),
-        clientY,
-        nodeY,
-        height: node.height() * node.scaleY()
-      })
+  let attributes = {}
 
-      /*
-      node.setAttrs({
-        width: Math.max(node.width() * node.scaleX(), 1),
-        height: Math.max(node.height() * node.scaleY(), 1),
-        scaleX: 1,
-        scaleY: 1,
-        //x: 0,
-        //y: 0
-      });
+  const resize = (event) => {
+    const targetNode = event.currentTarget
+    const dx = targetNode.width() * targetNode.scaleX() - attributes.width
+    const dy = targetNode.height() * targetNode.scaleY() - attributes.height
+    const px = targetNode.x() - attributes.x
+    const py = targetNode.y() - attributes.y
+
+    editor.selected.forEach((vertex) => {
+      const node = vertex.node
+      if (event.currentTarget.parent === vertex) {
+        vertex.setAttrs({
+          x: vertex.x() + Math.min(node.x(), 0),
+          y: vertex.y() + Math.min(node.y(), 0)
+        })
+        node.setAttrs({
+          width: Math.max(node.width() * node.scaleX(), 10),
+          height: Math.max(node.height() * node.scaleY(), 10),
+          scaleX: 1,
+          scaleY: 1,
+          x: Math.max(node.x(), 0),
+          y: Math.max(node.y(), 0)
+        })
+      } else {
+        vertex.setAttrs({
+          x: vertex.x() + px,
+          y: vertex.y() + py
+        })
+        node.setAttrs({
+          width: Math.max((node.width() + dx) * node.scaleX(), 10),
+          height: Math.max((node.height() + dy) * node.scaleY(), 10),
+          scaleX: 1,
+          scaleY: 1,
+          x: Math.max(node.x(), 0),
+          y: Math.max(node.y(), 0)
+        })
+      }
       vertex.updateTextPosition()
-*/
     })
+    attributes = {
+      x: targetNode.x(),
+      y: targetNode.y(),
+      width: targetNode.width(),
+      height: targetNode.height()
+    }
   }
 
-  graph.on('select', (e) => {
-    console.log('select', e)
+  graph.on('select', (vertex) => {
+    vertex.node.on('transformstart', (event) => {
+      const node = event.currentTarget
+      attributes = {
+        x: node.x(),
+        y: node.y(),
+        width: node.width(),
+        height: node.height()
+      }
+    })
+    vertex.node.on('transform', resize)
   })
 
-  graph.on('unselect', (e) => {
-    console.log('unselect', e)
+  graph.on('unselect', (vertex) => {
+    vertex.node.off('transform')
   })
 }
 
