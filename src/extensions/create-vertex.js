@@ -24,11 +24,13 @@ const createVertex = (editor) => {
   })
 
   stage.on('mousedown', (event) => {
-    enableCreateClick = true
+    enableCreateClick = editor.selected.length === 0
   })
 
   stage.on('mousemove', (event) => {
-    enableCreateClick = false
+    if (Math.abs(event.evt.movementX) > 1 || Math.abs(event.evt.movementY) > 1) {
+      enableCreateClick = false
+    }
   })
 }
 

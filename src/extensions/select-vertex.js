@@ -22,7 +22,7 @@ const boxOptions = {
 const selectVertex = (editor) => {
   const stage = editor.stage
   const graph = editor.graph
-  const transformers = []
+  let transformers = []
   let enableSelectClick = false
 
   const selectionBox = new Rect(boxOptions)
@@ -40,6 +40,18 @@ const selectVertex = (editor) => {
     stage.batchDraw()
   }
 
+  const destroyTransformer = (vertex) => {
+    transformers = transformers.filter((transformer) => {
+      if (transformer.node().parent === vertex) {
+        transformer.destroy()
+        vertex.select(false)
+        graph.fire('unselect', vertex)
+        return false
+      }
+      return true
+    })
+  }
+
   const destroyTransformers = () => {
     transformers.forEach((transformer) => transformer.destroy())
     transformers.length = 0
@@ -52,12 +64,16 @@ const selectVertex = (editor) => {
 
   stage.on('click tap', (event) => {
     if (enableSelectClick) {
-      console.log(enableSelectClick)
       if (event.target.parent instanceof Vertex) {
+        const vertex = event.target.parent
         if (!event.evt.shiftKey) {
           destroyTransformers()
         }
-        createTransformer(event.target.parent)
+        if (!vertex.isSelected) {
+          createTransformer(vertex)
+        } else {
+          destroyTransformer(vertex)
+        }
         graph.batchDraw()
       } else if (!event.evt.shiftKey) {
         destroyTransformers()
@@ -81,7 +97,9 @@ const selectVertex = (editor) => {
   })
 
   stage.on('mousemove', (event) => {
-    enableSelectClick = false
+    if (Math.abs(event.evt.movementX) > 5 || Math.abs(event.evt.movementY) > 5) {
+      enableSelectClick = false
+    }
     if (selectionBox.isVisible()) {
       const scale = stage.scaleX()
       const mousePointTo = {
@@ -99,6 +117,9 @@ const selectVertex = (editor) => {
   stage.on('mouseup', (event) => {
     if (selectionBox.isVisible()) {
       const selectionRect = selectionBox.getClientRect()
+      if (!event.evt.shiftKey) {
+        destroyTransformers()
+      }
       editor.vertices.forEach((vertex) => {
         if (Util.haveIntersection(selectionRect, vertex.node.getClientRect())) {
           if (!vertex.isSelected) {
