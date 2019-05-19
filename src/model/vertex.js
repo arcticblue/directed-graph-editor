@@ -7,8 +7,7 @@ const nodeOptions = {
   height: 49,
   fill: '#ffcc00',
   stroke: 'black',
-  cornerRadius: 5,
-  strokeScaleEnabled: false
+  cornerRadius: 5
 }
 
 const textOptions = {
@@ -34,6 +33,14 @@ export default class Vertex extends Group {
 
   get text() {
     return this._text
+  }
+
+  get center() {
+    const { width, height } = this.node.size()
+    return {
+      x: this.x() + width / 2,
+      y: this.y() + height / 2
+    }
   }
 
   get isSelected() {

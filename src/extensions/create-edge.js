@@ -50,7 +50,7 @@ const createEdge = (editor) => {
       if (sourceVertex !== event.target.parent) {
         if (editor.ghostEdge === null) {
           editor.ghostEdge = new Arrow(ghostEdgeOptions)
-          points = mousePointTo()
+          points = [sourceVertex.center.x, sourceVertex.center.y]
           editor.ghostEdge.points(points)
           graph.add(editor.ghostEdge)
         } else {
@@ -69,7 +69,9 @@ const createEdge = (editor) => {
   const onMouseUp = (event) => {
     if (editor.ghostEdge !== null) {
       if (event.target.parent instanceof Vertex) {
-        console.log('create edge')
+        console.log('create edge', event.target.parent.center)
+        const p = event.target.parent.center
+        editor.ghostEdge.points(points.concat([p.x, p.y]))
         resetEdgeCreation()
       } else {
         points.push(...mousePointTo())
