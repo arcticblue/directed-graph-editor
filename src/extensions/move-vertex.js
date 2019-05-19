@@ -12,7 +12,7 @@ const moveVertex = (editor) => {
   }
 
   const onMouseMove = (event) => {
-    if (event.evt.which && Object.entries(cursorPoint).length !== 0) {
+    if (event.evt.which === 1 && Object.entries(cursorPoint).length !== 0) {
       const point = { x: event.evt.x, y: event.evt.y }
       const delta = { x: point.x - cursorPoint.x, y: point.y - cursorPoint.y }
       editor.selected.forEach((vertex) => vertex.move(delta))

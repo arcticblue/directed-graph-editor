@@ -6,8 +6,8 @@ const createVertex = (editor) => {
   const graph = editor.graph
   let enableCreateClick = false
 
-  stage.on('click tap', (event) => {
-    if (enableCreateClick) {
+  stage.on('dblclick dbltap', (event) => {
+    if (editor.ghostEdge === null) {
       if (event.target === editor.stage) {
         if (editor.selected.length === 0) {
           const name = editor.vertices.length + ''
@@ -20,16 +20,6 @@ const createVertex = (editor) => {
           stage.batchDraw()
         }
       }
-    }
-  })
-
-  stage.on('mousedown', (event) => {
-    enableCreateClick = editor.selected.length === 0
-  })
-
-  stage.on('mousemove', (event) => {
-    if (Math.abs(event.evt.movementX) > 1 || Math.abs(event.evt.movementY) > 1) {
-      enableCreateClick = false
     }
   })
 }

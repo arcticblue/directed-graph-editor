@@ -4,6 +4,7 @@ import { Vertex } from './model'
 
 export default class DirectedGraphEditor {
   constructor(id) {
+    this._ghostEdge = null
     const container = (this._container = document.getElementById(id))
     const stage = (this._stage = new Stage({
       container: id,
@@ -17,6 +18,14 @@ export default class DirectedGraphEditor {
     enableExtensions(this)
     stage.add(graph)
     stage.draw()
+  }
+
+  get ghostEdge() {
+    return this._ghostEdge
+  }
+
+  set ghostEdge(edge) {
+    this._ghostEdge = edge
   }
 
   get container() {

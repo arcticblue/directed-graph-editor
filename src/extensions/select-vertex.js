@@ -70,6 +70,7 @@ const selectVertex = (editor) => {
           destroyTransformers()
         }
         if (!vertex.isSelected) {
+          console.log('SELECT', editor.ghostEdge)
           createTransformer(vertex)
         } else {
           destroyTransformer(vertex)
