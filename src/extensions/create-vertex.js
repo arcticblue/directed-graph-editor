@@ -4,22 +4,21 @@ import { Vertex } from '../model'
 const createVertex = (editor) => {
   const stage = editor.stage
   const graph = editor.graph
-  let enableCreateClick = false
+
+  const canCreateVertex = (event) => {
+    return event.target === editor.stage && editor.ghostEdge === null && editor.selected.length === 0
+  }
 
   stage.on('dblclick dbltap', (event) => {
-    if (editor.ghostEdge === null) {
-      if (event.target === editor.stage) {
-        if (editor.selected.length === 0) {
-          const name = editor.vertices.length + ''
-          const scale = stage.scaleX()
-          const mousePointTo = {
-            x: stage.getPointerPosition().x / scale - stage.x() / scale,
-            y: stage.getPointerPosition().y / scale - stage.y() / scale
-          }
-          graph.add(new Vertex(uuid(), name, mousePointTo.x - 24, mousePointTo.y - 24))
-          stage.batchDraw()
-        }
-      }
+    if (canCreateVertex(event)) {
+      const name = editor.vertices.length + ''
+      const transform = graph
+        .getAbsoluteTransform()
+        .copy()
+        .invert()
+      const position = transform.point(stage.getPointerPosition())
+      graph.add(new Vertex(uuid(), name, position))
+      stage.batchDraw()
     }
   })
 }

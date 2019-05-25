@@ -6,7 +6,9 @@ const nodeOptions = {
   height: 49,
   fill: '#ffcc00',
   stroke: 'black',
-  cornerRadius: 5
+  cornerRadius: 5,
+  x: -24,
+  y: -24
 }
 
 const textOptions = {
@@ -16,8 +18,8 @@ const textOptions = {
 }
 
 export default class Vertex extends Element {
-  constructor(id, name, x, y) {
-    super({ id, x, y })
+  constructor(id, name, position) {
+    super({ id, ...position })
     const node = (this._node = new Rect({ ...nodeOptions }))
     const text = (this._text = new Text({ ...textOptions }))
     this._text.text(id)
