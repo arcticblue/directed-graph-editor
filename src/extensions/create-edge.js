@@ -1,6 +1,5 @@
 import uuid from 'uuid/v1'
-import { Arrow } from 'konva'
-import { Vertex } from '../model'
+import { Edge, Vertex } from '../model'
 
 const createEdge = (editor) => {
   const stage = editor.stage
@@ -8,13 +7,6 @@ const createEdge = (editor) => {
 
   let sourceVertex = null
   let points = []
-
-  const ghostEdgeOptions = {
-    stroke: 'black',
-    id: uuid(),
-    fill: 'black',
-    listening: false
-  }
 
   const mousePointTo = () => {
     const scale = stage.scaleX()
@@ -49,17 +41,17 @@ const createEdge = (editor) => {
     if (sourceVertex !== null && event.evt.which === 1) {
       if (sourceVertex !== event.target.parent) {
         if (editor.ghostEdge === null) {
-          editor.ghostEdge = new Arrow(ghostEdgeOptions)
+          editor.ghostEdge = new Edge(uuid())
           points = [sourceVertex.center.x, sourceVertex.center.y]
-          editor.ghostEdge.points(points)
+          editor.ghostEdge.points = points
           graph.add(editor.ghostEdge)
         } else {
-          editor.ghostEdge.points(points.concat(mousePointTo()))
+          editor.ghostEdge.points = points.concat(mousePointTo())
         }
         graph.batchDraw()
       }
     } else if (editor.ghostEdge !== null) {
-      editor.ghostEdge.points(points.concat(mousePointTo()))
+      editor.ghostEdge.points = points.concat(mousePointTo())
       graph.batchDraw()
     } else {
       resetEdgeCreation()
@@ -71,7 +63,7 @@ const createEdge = (editor) => {
       if (event.target.parent instanceof Vertex) {
         console.log('create edge', event.target.parent.center)
         const p = event.target.parent.center
-        editor.ghostEdge.points(points.concat([p.x, p.y]))
+        editor.ghostEdge.points = points.concat([p.x, p.y])
         resetEdgeCreation()
       } else {
         points.push(...mousePointTo())
@@ -88,7 +80,7 @@ const createEdge = (editor) => {
   document.addEventListener(
     'keydown',
     (event) => {
-      if (event.key === 'Escape' && editor.ghostEdge !== null && editor.ghostEdge.points().length > 4) {
+      if (event.key === 'Escape' && editor.ghostEdge !== null && editor.ghostEdge.points.length > 4) {
         resetEdgeCreation()
       }
     },

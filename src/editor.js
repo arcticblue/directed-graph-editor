@@ -1,6 +1,6 @@
 import { Layer, Stage, Transformer } from 'konva'
 import { enableExtensions } from './extensions'
-import { Vertex } from './model'
+import { Edge, Vertex } from './model'
 
 export default class DirectedGraphEditor {
   constructor(id) {
@@ -40,13 +40,20 @@ export default class DirectedGraphEditor {
     return this._graph
   }
 
-  get vertices() {
-    return this._graph
-      .find((node) => {
-        return node.getType() === 'Group'
+  get edges() {
+    return this.elements.filter((element) => element instanceof Edge)
+  }
+
+  get elements() {
+    return this.graph
+      .find((element) => {
+        return element.getType() === 'Group'
       })
       .toArray()
-      .filter((node) => node instanceof Vertex)
+  }
+
+  get vertices() {
+    return this.elements.filter((element) => element instanceof Vertex)
   }
 
   get selected() {
