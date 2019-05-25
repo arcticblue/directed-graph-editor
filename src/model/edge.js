@@ -9,9 +9,9 @@ const arrowOptions = {
 }
 
 export default class Edge extends Group {
-  constructor(id, name, source, target) {
+  constructor(id, name, source, target, points = []) {
     super({ ...options, id })
-    const arrow = (this._arrow = new Arrow({ ...arrowOptions }))
+    const arrow = (this._arrow = new Arrow({ ...arrowOptions, points }))
     this._source = source
     this._target = target
     this.add(arrow)

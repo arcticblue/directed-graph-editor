@@ -5,7 +5,7 @@ const createEdge = (editor) => {
   const stage = editor.stage
   const graph = editor.graph
 
-  let sourceVertex = null
+  let source = null
   let points = []
 
   const mousePointTo = () => {
@@ -18,9 +18,9 @@ const createEdge = (editor) => {
 
   const resetEdgeCreation = () => {
     if (editor.ghostEdge !== null) {
-      //editor.ghostEdge.destroy()
+      editor.ghostEdge.destroy()
     }
-    sourceVertex = null
+    source = null
     editor.ghostEdge = null
     points = []
     graph.batchDraw()
@@ -30,7 +30,7 @@ const createEdge = (editor) => {
     if (event.target.parent instanceof Vertex) {
       const vertex = event.target.parent
       if (!vertex.isSelected) {
-        sourceVertex = vertex
+        source = vertex
       } else {
         resetEdgeCreation()
       }
@@ -38,11 +38,11 @@ const createEdge = (editor) => {
   }
 
   const onMouseMove = (event) => {
-    if (sourceVertex !== null && event.evt.which === 1) {
-      if (sourceVertex !== event.target.parent) {
+    if (source !== null && event.evt.which === 1) {
+      if (source !== event.target.parent) {
         if (editor.ghostEdge === null) {
           editor.ghostEdge = new Edge(uuid())
-          points = [sourceVertex.center.x, sourceVertex.center.y]
+          points = [source.center.x, source.center.y]
           editor.ghostEdge.points = points
           graph.add(editor.ghostEdge)
         } else {
@@ -61,9 +61,13 @@ const createEdge = (editor) => {
   const onMouseUp = (event) => {
     if (editor.ghostEdge !== null) {
       if (event.target.parent instanceof Vertex) {
+        const target = event.target.parent
         console.log('create edge', event.target.parent.center)
         const p = event.target.parent.center
         editor.ghostEdge.points = points.concat([p.x, p.y])
+
+        graph.add(new Edge(uuid(), 'name', source, target, editor.ghostEdge.points))
+
         resetEdgeCreation()
       } else {
         points.push(...mousePointTo())
