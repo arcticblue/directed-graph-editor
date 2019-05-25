@@ -29,7 +29,7 @@ const createEdge = (editor) => {
   const onMouseDown = (event) => {
     if (event.target.parent instanceof Vertex) {
       const vertex = event.target.parent
-      if (!vertex.isSelected) {
+      if (!vertex.selected) {
         source = vertex
       } else {
         resetEdgeCreation()

@@ -6,7 +6,7 @@ const moveVertex = (editor) => {
 
   const onMouseDown = (event) => {
     const vertex = event.target.parent
-    if (vertex.isSelected) {
+    if (vertex.selected) {
       cursorPoint = { x: event.evt.x, y: event.evt.y }
     }
   }

@@ -57,7 +57,7 @@ export default class DirectedGraphEditor {
   }
 
   get selected() {
-    return this.vertices.filter((vertex) => vertex.isSelected)
+    return this.vertices.filter((vertex) => vertex.selected)
   }
 
   load = (elements) => {}

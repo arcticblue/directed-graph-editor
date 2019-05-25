@@ -1,6 +1,5 @@
-import { Group, Rect, Text } from 'konva'
-
-const options = {}
+import { Rect, Text } from 'konva'
+import Element from './element'
 
 const nodeOptions = {
   width: 49,
@@ -16,13 +15,12 @@ const textOptions = {
   listening: false
 }
 
-export default class Vertex extends Group {
+export default class Vertex extends Element {
   constructor(id, name, x, y) {
-    super({ ...options, id, x, y })
+    super({ id, x, y })
     const node = (this._node = new Rect({ ...nodeOptions }))
     const text = (this._text = new Text({ ...textOptions }))
     this._text.text(id)
-    this._selected = false
     this.add(node, text)
     this.updateTextPosition()
   }
@@ -41,14 +39,6 @@ export default class Vertex extends Group {
       x: this.x() + width / 2,
       y: this.y() + height / 2
     }
-  }
-
-  get isSelected() {
-    return this._selected
-  }
-
-  select = (selected) => {
-    this._selected = selected
   }
 
   updateTextPosition = () => {

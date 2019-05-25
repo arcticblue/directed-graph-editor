@@ -34,7 +34,7 @@ const selectVertex = (editor) => {
     const transformer = new Transformer(transformerOptions)
     transformer.attachTo(vertex.node)
     transformers.push(transformer)
-    vertex.select(true)
+    vertex.selected = true
     vertex.add(transformer)
     graph.fire('select', vertex)
     stage.batchDraw()
@@ -44,7 +44,7 @@ const selectVertex = (editor) => {
     transformers = transformers.filter((transformer) => {
       if (transformer.node().parent === vertex) {
         transformer.destroy()
-        vertex.select(false)
+        vertex.selected = false
         graph.fire('unselect', vertex)
         return false
       }
@@ -56,7 +56,7 @@ const selectVertex = (editor) => {
     transformers.forEach((transformer) => transformer.destroy())
     transformers.length = 0
     editor.selected.forEach((vertex) => {
-      vertex.select(false)
+      vertex.selected = false
       graph.fire('unselect', vertex)
     })
     stage.batchDraw()
@@ -69,7 +69,7 @@ const selectVertex = (editor) => {
         if (!event.evt.shiftKey) {
           destroyTransformers()
         }
-        if (!vertex.isSelected) {
+        if (!vertex.selected) {
           console.log('SELECT', editor.ghostEdge)
           createTransformer(vertex)
         } else {
@@ -123,7 +123,7 @@ const selectVertex = (editor) => {
       }
       editor.vertices.forEach((vertex) => {
         if (Util.haveIntersection(selectionRect, vertex.node.getClientRect())) {
-          if (!vertex.isSelected) {
+          if (!vertex.selected) {
             createTransformer(vertex)
           }
         }

@@ -1,4 +1,5 @@
 import Edge from './edge'
+import Element from './element'
 import Vertex from './vertex'
 
-export { Edge, Vertex }
+export { Edge, Element, Vertex }

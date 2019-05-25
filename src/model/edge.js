@@ -1,6 +1,5 @@
-import { Arrow, Group, Text } from 'konva'
-
-const options = {}
+import { Arrow, Text } from 'konva'
+import Element from './element'
 
 const arrowOptions = {
   stroke: 'black',
@@ -8,9 +7,9 @@ const arrowOptions = {
   listening: false
 }
 
-export default class Edge extends Group {
+export default class Edge extends Element {
   constructor(id, name, source, target, points = []) {
-    super({ ...options, id })
+    super({ id })
     const arrow = (this._arrow = new Arrow({ ...arrowOptions, points }))
     this._source = source
     this._target = target
