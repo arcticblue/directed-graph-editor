@@ -17,7 +17,20 @@ const moveVertex = (editor) => {
       const { x, y } = event.evt
       const currentPointerPosition = { x, y }
       const vector = editor.calculateVector(prevoiusPointerPosition, currentPointerPosition)
-      editor.selected.forEach((vertex) => vertex.move(vector))
+      editor.selected.forEach((vertex) => {
+        vertex.move(vector)
+        editor.edges
+          .filter((edge) => edge.source === vertex)
+          .forEach((edge) => {
+            edge.points = [edge.points[0] + vector.x, edge.points[1] + vector.y].concat(edge.points.slice(2))
+          })
+        editor.edges
+          .filter((edge) => edge.target === vertex)
+          .forEach((edge) => {
+            const [ex, ey] = edge.points.slice(-2)
+            edge.points = edge.points.slice(0, -2).concat([ex + vector.x, ey + vector.y])
+          })
+      })
       graph.batchDraw()
       prevoiusPointerPosition = currentPointerPosition
     }

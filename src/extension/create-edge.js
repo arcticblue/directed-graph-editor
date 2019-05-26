@@ -15,11 +15,15 @@ const createEdge = (editor) => {
   }
 
   const resetEdgeCreation = () => {
+    stage.off('mousemove.edge')
+    stage.off('mouseup.edge')
     if (editor.ghostEdge !== null) {
       editor.ghostEdge.destroy()
     }
     source = null
-    editor.ghostEdge = null
+    setTimeout(() => {
+      editor.ghostEdge = null
+    }, 1)
     points = []
     graph.batchDraw()
   }
@@ -29,6 +33,8 @@ const createEdge = (editor) => {
       const vertex = event.target.parent
       if (!vertex.selected && source === null) {
         source = vertex
+        stage.on('mousemove.edge', onMouseMove)
+        stage.on('mouseup.edge', onMouseUp)
       }
     }
   }
@@ -94,8 +100,6 @@ const createEdge = (editor) => {
   )
 
   stage.on('mousedown.edge', onMouseDown)
-  stage.on('mousemove.edge', onMouseMove)
-  stage.on('mouseup.edge', onMouseUp)
 }
 
 export default createEdge

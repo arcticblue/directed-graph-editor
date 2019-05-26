@@ -61,7 +61,7 @@ const selectVertex = (editor) => {
   }
 
   stage.on('click tap', (event) => {
-    if (enableSelectClick) {
+    if (editor.ghostEdge === null) {
       if (event.target.parent instanceof Vertex) {
         const vertex = event.target.parent
         if (!event.evt.shiftKey) {
@@ -81,7 +81,6 @@ const selectVertex = (editor) => {
   })
 
   stage.on('mousedown', (event) => {
-    enableSelectClick = true
     if (event.target === editor.stage) {
       const scale = stage.scaleX()
       const mousePointTo = {
@@ -95,9 +94,6 @@ const selectVertex = (editor) => {
   })
 
   stage.on('mousemove', (event) => {
-    if (Math.abs(event.evt.movementX) > 5 || Math.abs(event.evt.movementY) > 5) {
-      enableSelectClick = false
-    }
     if (selectionBox.isVisible()) {
       const scale = stage.scaleX()
       const mousePointTo = {

@@ -16,6 +16,14 @@ export default class Edge extends Element {
     this.add(arrow)
   }
 
+  get source() {
+    return this._source
+  }
+
+  get target() {
+    return this._target
+  }
+
   get points() {
     return this._arrow.points()
   }
