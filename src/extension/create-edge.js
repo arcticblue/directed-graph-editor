@@ -1,4 +1,5 @@
 import uuid from 'uuid/v1'
+import { Rect } from 'konva'
 import { Edge, Vertex } from '../model'
 
 const createEdge = (editor) => {
@@ -9,11 +10,8 @@ const createEdge = (editor) => {
   let points = []
 
   const mousePointTo = () => {
-    const scale = stage.scaleX()
-    return [
-      stage.getPointerPosition().x / scale - stage.x() / scale,
-      stage.getPointerPosition().y / scale - stage.y() / scale
-    ]
+    const mousePoint = editor.calculatePosition()
+    return [mousePoint.x, mousePoint.y]
   }
 
   const resetEdgeCreation = () => {
@@ -29,10 +27,8 @@ const createEdge = (editor) => {
   const onMouseDown = (event) => {
     if (event.target.parent instanceof Vertex) {
       const vertex = event.target.parent
-      if (!vertex.selected) {
+      if (!vertex.selected && source === null) {
         source = vertex
-      } else {
-        resetEdgeCreation()
       }
     }
   }
@@ -62,12 +58,18 @@ const createEdge = (editor) => {
     if (editor.ghostEdge !== null) {
       if (event.target.parent instanceof Vertex) {
         const target = event.target.parent
-        console.log('create edge', event.target.parent.center)
-        const p = event.target.parent.center
-        editor.ghostEdge.points = points.concat([p.x, p.y])
-
+        const { x: tx, y: ty } = target.center
+        const theta = editor.calculateAngle(...points.slice(-2).concat([tx, ty]))
+        points = points.slice(0, -2).concat([tx - 28 * Math.cos(theta), ty - 28 * Math.sin(theta)])
+        const { x: sx, y: sy } = source.center
+        if (points.length > 2) {
+          const alpha = editor.calculateAngle(...points.slice(2, 4), ...points.slice(0, 2))
+          editor.ghostEdge.points = [sx - 25 * Math.cos(alpha), sy - 25 * Math.sin(alpha)].concat(points.slice(2))
+        } else {
+          const alpha = editor.calculateAngle(tx, ty, sx, sy)
+          editor.ghostEdge.points = [sx - 25 * Math.cos(alpha), sy - 25 * Math.sin(alpha)].concat(points)
+        }
         graph.add(new Edge(uuid(), 'name', source, target, editor.ghostEdge.points))
-
         resetEdgeCreation()
       } else {
         points.push(...mousePointTo())
@@ -84,7 +86,7 @@ const createEdge = (editor) => {
   document.addEventListener(
     'keydown',
     (event) => {
-      if (event.key === 'Escape' && editor.ghostEdge !== null && editor.ghostEdge.points.length > 4) {
+      if (event.key === 'Escape' && editor.ghostEdge !== null && editor.ghostEdge.points.length > 2) {
         resetEdgeCreation()
       }
     },

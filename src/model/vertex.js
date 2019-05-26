@@ -22,7 +22,7 @@ export default class Vertex extends Element {
     super({ id, ...position })
     const node = (this._node = new Rect({ ...nodeOptions }))
     const text = (this._text = new Text({ ...textOptions }))
-    this._text.text(id)
+    this._text.text(name)
     this.add(node, text)
     this.updateTextPosition()
   }
@@ -36,10 +36,12 @@ export default class Vertex extends Element {
   }
 
   get center() {
+    const scale = this.node.scaleX()
+    const { x, y } = this.node.position()
     const { width, height } = this.node.size()
     return {
-      x: this.x() + width / 2,
-      y: this.y() + height / 2
+      x: this.x() + x + (width * scale) / 2,
+      y: this.y() + y + (height * scale) / 2
     }
   }
 

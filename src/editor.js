@@ -68,12 +68,16 @@ export default class DirectedGraphEditor {
     }
   }
 
-  calculatePosition = () => {
+  absolutePosition = (point) => {
     const transform = this.graph
       .getAbsoluteTransform()
       .copy()
       .invert()
-    return transform.point(this.stage.getPointerPosition())
+    return transform.point(point)
+  }
+
+  calculatePosition = () => {
+    return this.absolutePosition(this.stage.getPointerPosition())
   }
 
   calculateVector = (p1, p2) => {
@@ -87,5 +91,9 @@ export default class DirectedGraphEditor {
       x: targetPoint.x - sourcePoint.x,
       y: targetPoint.y - sourcePoint.y
     }
+  }
+
+  calculateAngle(x1, y1, x2, y2) {
+    return Math.atan2(y2 - y1, x2 - x1)
   }
 }
