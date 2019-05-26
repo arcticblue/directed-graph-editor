@@ -1,5 +1,5 @@
 import { Layer, Stage, Transformer } from 'konva'
-import { enableExtensions } from './extensions'
+import enableExtensions from './extension'
 import { Edge, Vertex } from './model'
 
 export default class DirectedGraphEditor {
@@ -65,6 +65,27 @@ export default class DirectedGraphEditor {
   layout = (options) => {
     return {
       run: () => {}
+    }
+  }
+
+  calculatePosition = () => {
+    const transform = this.graph
+      .getAbsoluteTransform()
+      .copy()
+      .invert()
+    return transform.point(this.stage.getPointerPosition())
+  }
+
+  calculateVector = (p1, p2) => {
+    const transform = this.graph
+      .getAbsoluteTransform()
+      .copy()
+      .invert()
+    const sourcePoint = transform.point(p1)
+    const targetPoint = transform.point(p2)
+    return {
+      x: targetPoint.x - sourcePoint.x,
+      y: targetPoint.y - sourcePoint.y
     }
   }
 }

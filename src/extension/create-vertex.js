@@ -9,18 +9,15 @@ const createVertex = (editor) => {
     return event.target === editor.stage && editor.ghostEdge === null && editor.selected.length === 0
   }
 
-  stage.on('dblclick dbltap', (event) => {
+  const doCreateVertex = (event) => {
     if (canCreateVertex(event)) {
       const name = editor.vertices.length + ''
-      const transform = graph
-        .getAbsoluteTransform()
-        .copy()
-        .invert()
-      const position = transform.point(stage.getPointerPosition())
-      graph.add(new Vertex(uuid(), name, position))
-      stage.batchDraw()
+      graph.add(new Vertex(uuid(), name, editor.calculatePosition()))
+      graph.batchDraw()
     }
-  })
+  }
+
+  stage.on('dblclick dbltap', doCreateVertex)
 }
 
 export default createVertex

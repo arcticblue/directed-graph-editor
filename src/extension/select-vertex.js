@@ -4,8 +4,6 @@ import { Vertex } from '../model'
 const transformerOptions = {
   rotateEnabled: false,
   borderEnabled: false,
-  padding: 4,
-  anchorSize: 5,
   anchorFill: 'black',
   anchorStroke: 'black'
 }
@@ -31,7 +29,7 @@ const selectVertex = (editor) => {
   graph.add(selectionBox)
 
   const createTransformer = (vertex) => {
-    const transformer = new Transformer(transformerOptions)
+    const transformer = new Transformer({ ...transformerOptions, anchorSize: 8 * stage.scaleX() })
     transformer.attachTo(vertex.node)
     transformers.push(transformer)
     vertex.selected = true
@@ -131,6 +129,10 @@ const selectVertex = (editor) => {
       selectionBox.visible(false)
       stage.batchDraw()
     }
+  })
+
+  stage.on('zoom', () => {
+    transformers.forEach((transformer) => transformer.anchorSize(8 * stage.scaleX()))
   })
 }
 

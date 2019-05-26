@@ -21,6 +21,7 @@ const zoomGraph = (editor) => {
       y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
     }
     stage.position(newPosition)
+    stage.fire('zoom')
     stage.batchDraw()
   })
 }

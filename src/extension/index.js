@@ -16,4 +16,4 @@ const enableExtensions = (editor) => {
   zoomGraph(editor)
 }
 
-export { enableExtensions }
+export default enableExtensions
