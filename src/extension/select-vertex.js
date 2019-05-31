@@ -21,7 +21,7 @@ const selectVertex = (editor) => {
   const stage = editor.stage
   const graph = editor.graph
   let transformers = []
-  let enableSelectClick = false
+  let enableSelectClick = true
 
   const selectionBox = new Rect(boxOptions)
   selectionBox.listening(false)
@@ -61,7 +61,7 @@ const selectVertex = (editor) => {
   }
 
   stage.on('click tap', (event) => {
-    if (editor.ghostEdge === null) {
+    if (editor.ghostEdge === null && enableSelectClick) {
       if (event.target.parent instanceof Vertex) {
         const vertex = event.target.parent
         if (!event.evt.shiftKey) {
@@ -104,6 +104,7 @@ const selectVertex = (editor) => {
         width: mousePointTo.x - selectionBox.position().x,
         height: mousePointTo.y - selectionBox.position().y
       })
+      enableSelectClick = false
       stage.batchDraw()
     }
   })
@@ -122,6 +123,7 @@ const selectVertex = (editor) => {
         }
       })
       selectionBox.visible(false)
+      setTimeout(() => (enableSelectClick = true), 1)
       stage.batchDraw()
     }
   })
