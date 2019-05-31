@@ -3,8 +3,11 @@ const deleteSelected = (editor) => {
 
   const doDeleteSelected = (event) => {
     if (event.key === 'Backspace') {
-      editor.selected.forEach((element) => {
-        element.destroy()
+      editor.selected.forEach((vertex) => {
+        editor.edges
+          .filter((edge) => edge.source === vertex || edge.target === vertex)
+          .forEach((edge) => edge.destroy())
+        vertex.destroy()
       })
       stage.batchDraw()
     }
