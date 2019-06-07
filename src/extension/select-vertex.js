@@ -29,6 +29,7 @@ const selectVertex = (editor) => {
   graph.add(selectionBox)
 
   const createTransformer = (vertex) => {
+    vertex.moveToTop()
     const transformer = new Transformer({ ...transformerOptions, anchorSize: 8 * stage.scaleX() })
     transformer.attachTo(vertex.node)
     transformers.push(transformer)
