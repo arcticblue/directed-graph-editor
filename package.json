@@ -15,6 +15,7 @@
   "author": "Nils Olsson",
   "license": "MIT",
   "dependencies": {
+    "finity": "^0.5.4",
     "konva": "^3.2.6",
     "uuid": "^3.3.2"
   },

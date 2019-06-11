@@ -1,4 +1,4 @@
-import { Rect, Text } from 'konva'
+import { Rect, Text, Transformer } from 'konva'
 import Element from './element'
 
 const nodeOptions = {
@@ -17,6 +17,13 @@ const textOptions = {
   listening: false
 }
 
+const transformerOptions = {
+  rotateEnabled: false,
+  borderEnabled: false,
+  anchorFill: 'black',
+  anchorStroke: 'black'
+}
+
 export default class Vertex extends Element {
   constructor(id, name, position) {
     super({ id, ...position })
@@ -25,6 +32,26 @@ export default class Vertex extends Element {
     this._text.text(name)
     this.add(node, text)
     this.updateTextPosition()
+  }
+
+  get selected() {
+    return super.selected
+  }
+
+  set selected(selected) {
+    super.selected = selected
+    if (selected) {
+      const stage = this.parent.parent
+      this._transformer = new Transformer({ ...transformerOptions, anchorSize: 8 * stage.scaleX() })
+      this._transformer.attachTo(this.node)
+      this.add(this._transformer)
+      this.node.on('transformstart', (event) => stage.fire('resizestart', this, event))
+      this.node.on('transform', (event) => stage.fire('resize', this, event))
+    } else {
+      this.node.off('transformstart')
+      this.node.off('transform')
+      this._transformer.destroy()
+    }
   }
 
   get node() {
