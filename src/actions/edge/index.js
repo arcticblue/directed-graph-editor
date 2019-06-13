@@ -1,5 +1,5 @@
 import uuid from 'uuid/v1'
-import { Edge } from '../../../model'
+import { Edge } from '../../model'
 
 let ghostEdge = null
 let points = []
@@ -76,12 +76,4 @@ const updateGhostEdge = (fromState, toState, { eventPayload: { editor, event } }
   editor.graph.batchDraw()
 }
 
-export {
-  createEdge,
-  createGhostEdgePoint,
-  createGhostEdge,
-  isComplexEdge,
-  isSimpleEdge,
-  resetGhostEdge,
-  updateGhostEdge
-}
+export { createEdge, createGhostEdgePoint, createGhostEdge, isComplexEdge, isSimpleEdge, resetGhostEdge, updateGhostEdge }

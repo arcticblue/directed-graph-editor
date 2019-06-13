@@ -38,7 +38,7 @@
     "jsxBracketSameLine": true,
     "arrowParens": "always",
     "semi": false,
-    "printWidth": 120
+    "printWidth": 160
   },
   "husky": {
     "hooks": {

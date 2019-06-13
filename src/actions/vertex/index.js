@@ -1,5 +1,5 @@
 import uuid from 'uuid/v1'
-import { Vertex } from '../../../model'
+import { Vertex } from '../../model'
 
 const createVertex = (fromState, toState, { eventPayload: { editor } }) => {
   const name = editor.vertices.length + ''

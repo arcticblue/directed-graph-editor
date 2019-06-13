@@ -1,27 +1,11 @@
 import Finity from 'finity'
-import {
-  isEdge,
-  isSelected,
-  isVertex,
-  isStage,
-  hasSelectedVertices,
-  dragDistance,
-  resetDragDistance
-} from './actions/common'
-import { zoomGraph } from './actions/stage'
-import { createVertex, deleteSelected, selectVertex, unselectVertices } from './actions/vertex'
-import { createSelectionBox, selectSelectionBox, updateSelectionBox } from './actions/vertex/selection'
-import { startResize, resize } from './actions/vertex/resize'
-import { moveVertices, startMoveVertices } from './actions/vertex/move'
-import {
-  createEdge,
-  createGhostEdgePoint,
-  createGhostEdge,
-  isComplexEdge,
-  isSimpleEdge,
-  resetGhostEdge,
-  updateGhostEdge
-} from './actions/edge'
+import { isEdge, isSelected, isVertex, isStage, hasSelectedVertices, dragDistance, resetDragDistance } from '../actions/common'
+import { zoomGraph } from '../actions/stage'
+import { createVertex, deleteSelected, selectVertex, unselectVertices } from '../actions/vertex'
+import { createSelectionBox, selectSelectionBox, updateSelectionBox } from '../actions/vertex/selection'
+import { startResize, resize } from '../actions/vertex/resize'
+import { moveVertices, startMoveVertices } from '../actions/vertex/move'
+import { createEdge, createGhostEdgePoint, createGhostEdge, isComplexEdge, isSimpleEdge, resetGhostEdge, updateGhostEdge } from '../actions/edge'
 
 export default class EventHandler {
   constructor(editor) {
@@ -171,9 +155,7 @@ export default class EventHandler {
       .on('click')
       .transitionTo('selected')
       .global()
-      .onStateChange((oldState, newState, context) =>
-        console.log(`Changing state from '${oldState}' to '${newState}'`, context)
-      )
+      .onStateChange((oldState, newState, context) => console.log(`Changing state from '${oldState}' to '${newState}'`, context))
       .onUnhandledEvent((event, state) => {
         //console.log(`Unhandled event '${event}' in state '${state}'.`)
       })

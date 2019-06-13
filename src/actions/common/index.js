@@ -1,5 +1,5 @@
 import { Stage } from 'konva'
-import { Edge, Vertex } from '../../../model'
+import { Edge, Vertex } from '../../model'
 
 const isEdge = ({ eventPayload: { editor, event } }) => {
   if (!event.evt) {

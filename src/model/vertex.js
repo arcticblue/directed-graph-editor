@@ -13,7 +13,8 @@ const nodeOptions = {
 
 const textOptions = {
   text: '',
-  fontSize: 12,
+  fontSize: 18,
+  fontFamily: 'Calibri',
   listening: false
 }
 
