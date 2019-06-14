@@ -1,4 +1,4 @@
-import { Stage } from 'konva'
+import { Stage, Text } from 'konva'
 import { Edge, Vertex } from '../../model'
 
 const isEdge = ({ eventPayload: { editor, event } }) => {
@@ -24,6 +24,10 @@ const isStage = ({ eventPayload: { editor, event } }) => {
     return editor.stage.getIntersection(editor.stage.getPointerPosition()) === null
   }
   return event.target instanceof Stage
+}
+
+const isText = ({ eventPayload: { editor, event } }) => {
+  return event.target instanceof Text
 }
 
 const isVertex = ({ eventPayload: { editor, event } }) => {
@@ -72,4 +76,4 @@ const dragDistance = ({
   return !!startDragPosition && editor.calculateDistance(startDragPosition, { x, y }) > 2
 }
 
-export { isEdge, isSelected, isStage, isVertex, hasSelectedVertices, resetDragDistance, dragDistance }
+export { isEdge, isSelected, isStage, isText, isVertex, hasSelectedVertices, resetDragDistance, dragDistance }

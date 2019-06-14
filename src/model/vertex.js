@@ -15,7 +15,7 @@ const textOptions = {
   text: '',
   fontSize: 18,
   fontFamily: 'Calibri',
-  listening: false
+  listening: true
 }
 
 const transformerOptions = {
@@ -75,8 +75,8 @@ export default class Vertex extends Element {
 
   updateTextPosition = () => {
     this._text.position({
-      x: this._node.x() + this._node.width() / 2 - this._text.width() / 2,
-      y: this._node.y() + this._node.height() / 2 - this._text.height() / 2
+      x: this._node.x() + 0.5 + this._node.width() / 2 - this._text.width() / 2,
+      y: this._node.y() + 1.5 + this._node.height() / 2 - this._text.height() / 2
     })
   }
 }

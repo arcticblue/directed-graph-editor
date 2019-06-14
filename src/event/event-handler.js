@@ -1,5 +1,5 @@
 import Finity from 'finity'
-import { isEdge, isSelected, isVertex, isStage, hasSelectedVertices, dragDistance, resetDragDistance } from '../actions/common'
+import { isEdge, isSelected, isVertex, isStage, hasSelectedVertices, dragDistance, resetDragDistance, isText } from '../actions/common'
 import { zoomGraph } from '../actions/stage'
 import { createVertex, deleteSelected, selectVertex, unselectVertices } from '../actions/vertex'
 import { createSelectionBox, selectSelectionBox, updateSelectionBox } from '../actions/vertex/selection'
@@ -36,9 +36,11 @@ export default class EventHandler {
           .on('mousemove')
             .transitionTo('createEdge').withCondition(dragDistance).withAction(resetDragDistance).withAction(createGhostEdge)
           .on('click')
-            .transitionTo('selected').withAction(selectVertex).withAction(resetDragDistance)
+            .transitionTo('selected').withCondition((event) => !isText(event)).withAction(selectVertex).withAction(resetDragDistance)
           .on('wheel')
             .internalTransition().withAction(zoomGraph)
+          .on('dblclick')
+            .transitionTo('edit').withCondition(isText)
         .state('edge')
           .on('mouseover')
             .transitionTo('stage').withCondition(isStage)
@@ -91,6 +93,9 @@ export default class EventHandler {
             .internalTransition().withAction(moveVertices)
           .on("click")
             .transitionTo('selected')
+        .state('edit')
+          .on('click')
+            .transitionTo('stage').withCondition(isStage)
         .global()
           .onStateChange((oldState, newState, context) =>
             console.log(`Changing state from '${oldState}' to '${newState}'`, context)

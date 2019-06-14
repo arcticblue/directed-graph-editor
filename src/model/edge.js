@@ -31,4 +31,28 @@ export default class Edge extends Element {
   set points(points) {
     this._arrow.points(points)
   }
+
+  get dash() {
+    return this._arrow.dash()
+  }
+
+  set dash(dash) {
+    this._arrow.dash(dash)
+  }
+
+  get stroke() {
+    return this._arrow.stroke()
+  }
+
+  set stroke(color) {
+    this._arrow.stroke(color)
+  }
+
+  get fill() {
+    return this._arrow.fill()
+  }
+
+  set fill(color) {
+    this._arrow.fill(color)
+  }
 }
